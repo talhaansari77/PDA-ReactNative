@@ -11,6 +11,7 @@ import { Divider } from "react-native-elements/dist/divider/Divider";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useDispatch, useSelector } from "react-redux";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import { appColors } from "../../assets/Colors/Colors";
 
 export default function MenuItems({
   restaurantName,
@@ -121,7 +122,7 @@ const FoodInfo = (props) => (
           alignItems: "center",
         }}
       >
-        <Text style={style.black}>{props.food.price}</Text>
+        <Text style={style.black}>{props.food.price+ " pkr"}</Text>
         {/* plus Minus Button */}
         {props.placement === "cart" ? (
           <View style={{ flexDirection: "row", marginRight: 20 }}>
@@ -135,10 +136,10 @@ const FoodInfo = (props) => (
                 alignSelf: "center",
                 paddingHorizontal: 4,
                 paddingVertical: 2,
-                backgroundColor: "#000",
+                backgroundColor: appColors.black2,
               }}
             >
-              <FontAwesome5Icon name={"minus"} size={15} color={"#fff"} />
+              <FontAwesome5Icon name={"minus"} size={15} color={appColors.primary} />
             </TouchableOpacity>
             <Text style={{ fontSize: 14, marginHorizontal: 10 }}>{props.food.qty}</Text>
             {/* Plus */}
@@ -151,10 +152,10 @@ const FoodInfo = (props) => (
                 alignSelf: "center",
                 paddingHorizontal: 4,
                 paddingVertical: 2,
-                backgroundColor: "#000",
+                backgroundColor: appColors.black2,
               }}
             >
-              <FontAwesome5Icon name={"plus"} size={15} color={"#fff"} />
+              <FontAwesome5Icon name={"plus"} size={15} color={appColors.primary} />
             </TouchableOpacity>
           </View>
         ) : (

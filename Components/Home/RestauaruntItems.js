@@ -17,18 +17,19 @@ import { netConnection } from "../General/connection";
 export default function RestauaruntItems({ navigation, ...props }) {
   const [netStatus, setNetStatus] = useState({ type: "", isConnected: false });
   const [redHeart, setRedHeart] = useState(false);
+  const [counter, setCounter] = useState(0);
 
   const LoadMore = () => {
     let newload = props.load + 10;
     props.setLoad(newload);
-    console.log(props.load); 
+    console.log(props.load);
   };
 
   useEffect(() => {
     netConnection(setNetStatus);
-    if (setNetStatus.isConnected) {
-      props.getDataFromApi(props.load);
-    }
+    // if (setNetStatus.isConnected) {
+    props.getDataFromApi(props.load);
+    // }
   }, [props.load]);
 
   return (

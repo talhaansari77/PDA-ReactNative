@@ -4,6 +4,7 @@ import { useSelector, useDispatch as dispatch } from "react-redux";
 import OrderItem from "./OrderItem";
 import LottieView from "lottie-react-native";
 import Baseurl from "../Auth/Baseurl";
+import { appColors } from "../../assets/Colors/Colors";
 // import firebase from '../../firebase';
 
 export default function ViewCart({ navigation }) {
@@ -160,10 +161,10 @@ export default function ViewCart({ navigation }) {
             }}
           >
             <TouchableOpacity
-              onPress={() => setModalVisible(true)}
+              onPress={() => navigation.navigate("cart1")}
               activeOpacity={0.8}
               style={{
-                backgroundColor: "#000",
+                backgroundColor: appColors.black2,
                 marginTop: 20,
                 flexDirection: "row",
                 justifyContent: "flex-end",
@@ -177,8 +178,8 @@ export default function ViewCart({ navigation }) {
               <Text style={{ color: "#fff", fontSize: 20, marginRight: 60 }}>
                 ViewCart
               </Text>
-              <Text style={{ color: "#fff", fontSize: 20 }}>
-                {"$" + totalPKR}
+              <Text style={{ color: "#fff", fontSize: 16 }}>
+                {"pkr " +  parseInt(totalPKR)}
               </Text>
             </TouchableOpacity>
           </View>

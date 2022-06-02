@@ -5,10 +5,10 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import StackHome from "./Home";
+import StackHome, { CartItemCounter } from "./Home";
 import { appColors } from "../assets/Colors/Colors";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
@@ -16,6 +16,7 @@ import Baseurl from "../Components/Auth/Baseurl";
 import BottomTabs from "../Components/Home/BottomTabs";
 import Button from "../Components/Auth/Button";
 import SearchBar from "../Components/Home/SearchBar";
+import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -24,8 +25,11 @@ export default function HomeTabs({ navigation, route }) {
   const restaurantsUrl = Baseurl + "RestaurantsGRW/GetRestaurants.php?limit=";
   const pharmacyUrl = Baseurl + "PharmacyGRW/GetPharmacy.php?limit=";
   const pdaShop = Baseurl + "Shops/GetShops.php?limit=";
+  const { items } = useSelector((state) => state.cartReducer.selectedItems);
 
-  console.log(route.params.locationText, 'route.params.locationText'); 
+  console.log(route.params.locationText, "route.params.locationText");
+
+  useEffect(() => {}, [items]);
 
   const MainNavigator = () => (
     <View style={{ flex: 1 }}>
@@ -57,11 +61,14 @@ export default function HomeTabs({ navigation, route }) {
             source={require("../assets/images/splash-logo.png")}
             style={{ height: "100%", width: "60%" }}
           />
-          <FontAwesomeIcon
-            size={25}
-            name="cart-arrow-down"
-            onPress={() => navigation.navigate("Cart")}
-          />
+          <View>
+            <FontAwesomeIcon
+              size={25}
+              name="cart-arrow-down"
+              onPress={() => navigation.navigate("Cart")}
+            />
+            <CartItemCounter items={items} />
+          </View>
         </View>
         {/* <View style={{height:10}}></View> */}
         <View style={{ padding: 16 }}>

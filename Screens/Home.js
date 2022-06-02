@@ -14,6 +14,8 @@ import RestauaruntItems, {
 } from "../Components/Home/RestauaruntItems";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import { appColors } from "../assets/Colors/Colors";
+import { useSelector } from "react-redux";
 
 const Yelp_Api_Key =
   "P6Rlkv877Y8-f8lsHO2s_XB9g1UcQyDg1H5SMh7gburCmOXwMUTUZ4sFoNQTbWNSgSomdUo8tXJGHFUaYOucDhGkpEbT4kacwua8qhQc1rmGilKfruSuW6hC8aAkYnYx";
@@ -48,13 +50,14 @@ export default function StackHome({ navigation, route }) {
   // const [activeTab, setActiveTab] = useState("Delivery");
   const [isLoading, setIsLoading] = useState(true);
   const [load, setLoad] = useState(10);
+  const { items } = useSelector((state) => state.cartReducer.selectedItems);
 
   const getDataFromApi = (load, s = searchTerm) => {
     s = s ? s : "Punjab";
     s = s.replace(/^\s+|\s+$/gm, "").toLowerCase();
 
     const MapsApi = route.params.baseUrl + load;
-    console.log(MapsApi,"🖐 --Here");
+    console.log(MapsApi, "🖐 --Here");
 
     return fetch(MapsApi)
       .then((response) => response.json())
@@ -76,7 +79,7 @@ export default function StackHome({ navigation, route }) {
   useEffect(() => {
     getDataFromApi(load);
     console.log(searchTerm);
-  }, [searchTerm]);
+  }, [searchTerm, items]);
 
   return (
     <SafeAreaView style={{ backgroundColor: "#eee", flex: 1 }}>
@@ -108,11 +111,14 @@ export default function StackHome({ navigation, route }) {
             source={require("../assets/images/splash-logo.png")}
             style={{ height: "100%", width: "60%" }}
           />
-          <FontAwesomeIcon
-            size={25}
-            name="cart-arrow-down"
-            onPress={() => navigation.navigate("Cart")}
-          />
+          <View>
+            <FontAwesomeIcon
+              size={25}
+              name="cart-arrow-down"
+              onPress={() => navigation.navigate("Cart")}
+            />
+            <CartItemCounter items={items} />
+          </View>
         </View>
         {/* <View style={{height:10}}></View> */}
         <View style={{ padding: 16 }}>
@@ -135,3 +141,31 @@ export default function StackHome({ navigation, route }) {
     </SafeAreaView>
   );
 }
+
+export const CartItemCounter = ({ items }) =>
+  items.length > 0 ? (
+    <View
+      style={{
+        position: "absolute",
+        left: 20,
+        top: -5,
+        backgroundColor: appColors.secondary,
+        borderRadius: 20,
+        padding: 2,
+        width: 22,
+        alignItems: "center",
+      }}
+    >
+      <Text
+        style={{
+          fontWeight: "bold",
+          color: appColors.black2,
+          fontSize: 10,
+        }}
+      >
+        {items.length}
+      </Text>
+    </View>
+  ) : (
+    <></>
+  );

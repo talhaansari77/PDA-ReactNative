@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "../Auth/Button";
 import { CurrentLocation } from "../General/CurrentLocation";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { appColors } from "../../assets/Colors/Colors";
 
 export default function CustomDrawer({ locationText, status, ...props }) {
   // const [locationText, setLocationText] = useState("");
@@ -30,7 +31,7 @@ export default function CustomDrawer({ locationText, status, ...props }) {
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{ backgroundColor: "orange" }}
+        contentContainerStyle={{ backgroundColor: appColors.secondary }}
       >
         <ImageBackground
           source={require("../../assets/images/bg4.jpg")}
@@ -87,7 +88,7 @@ export default function CustomDrawer({ locationText, status, ...props }) {
           <Button
             text="Logout"
             size={20}
-            color={"orange"}
+            color={appColors.secondary}
             onPress={() => {
               CustomConfirmAlert(
                 "Important",
