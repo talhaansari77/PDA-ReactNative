@@ -73,17 +73,21 @@ export default function Cart({ navigation }) {
               .then((data) => {
                 if (data.status) {
                   console.log(data.Message);
+                  // turn off loading and move forward
+                  setLoading(false);
+                  setModalVisible(false);
+                  navigation.navigate("OrderCompleted", { orderId, totalPKR });
                 }
               });
           } else {
             console.log(data);
           }
         });
-      setTimeout(() => {
-        setLoading(false);
-        setModalVisible(false);
-        navigation.navigate("OrderCompleted", { orderId, totalPKR });
-      }, 2500);
+      // setTimeout(() => {
+      //   setLoading(false);
+      //   setModalVisible(false);
+      //   navigation.navigate("OrderCompleted", { orderId, totalPKR });
+      // }, 2500);
     } else {
       setLoading(false);
       navigation.navigate("Login");

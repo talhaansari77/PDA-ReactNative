@@ -13,6 +13,7 @@ import SellerNavs from "./SellerNavs";
 import { useSelector } from "react-redux";
 import SellerSignup from "./SellerSignup";
 import { CurrentLocation } from "../Components/General/CurrentLocation";
+import { appColors } from "../assets/Colors/Colors";
 
 export default function MainDrawer() {
   const Drawer = createDrawerNavigator();
@@ -34,7 +35,7 @@ export default function MainDrawer() {
       screenOptions={{
         headerShown: false,
         drawerActiveTintColor: "#3f3f3f",
-        drawerActiveBackgroundColor: "orange",
+        drawerActiveBackgroundColor: appColors.secondary,
         drawerLabelStyle: {
           marginLeft: -25,
           fontSize: 15,
