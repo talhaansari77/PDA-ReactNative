@@ -13,6 +13,7 @@ import Categories from "./Categories";
 import React, { useEffect, useState } from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { netConnection } from "../General/connection";
+import LottieView from "lottie-react-native";
 
 export default function RestauaruntItems({ navigation, ...props }) {
   const [netStatus, setNetStatus] = useState({ type: "", isConnected: false });
@@ -43,9 +44,16 @@ export default function RestauaruntItems({ navigation, ...props }) {
           }}
         >
           {netStatus.isConnected ? (
-            <ActivityIndicator color={"#fff"} size={50} />
+            <LottieView
+              style={{ height: 200 }}
+              source={require("../../assets/animations/progress-bar.json")}
+              autoPlay
+              speed={1}
+            />
           ) : (
-            <Text>No Internet Connection</Text>
+            <Text style={{ fontWeight: "bold", color: "#fff" }}>
+              No Internet Connection
+            </Text>
           )}
         </View>
       ) : (

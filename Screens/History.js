@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
+  ImageBackground,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Title from "../Components/Auth/Title";
@@ -14,10 +15,12 @@ import Baseurl from "../Components/Auth/Baseurl";
 import { useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import { modalContent } from "./ManageOrders";
+import LottieView from "lottie-react-native";
 
 export default function History({ navigation }) {
   const isFocused = useIsFocused();
-  const [counter, setCounter] = useState(0);
+  // const [counter, setCounter] = useState(0);  
+  const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([]);
   const [orderList, setOrderList] = useState([]);
   const [total, setTotal] = useState(0);
@@ -28,12 +31,15 @@ export default function History({ navigation }) {
   );
 
   const GetOrders = async () => {
+    setLoading(true);
+
     const response = await axios.post(
       Baseurl + "Orders/GetOrders.php",
       JSON.stringify({ email: email })
     );
     if (response.data.status) {
       setHistory(response.data.orders);
+      setLoading(false);
     }
     console.log(history);
 
@@ -44,6 +50,8 @@ export default function History({ navigation }) {
   //   setCounter(counter + 1);
   // }, 5000);
   const GetOrderList = async (orderId) => {
+    setLoading(true);
+
     const response = await axios.get(
       Baseurl + `OrderDetail/OrderDetail.php?orderId=${orderId}`
     );
@@ -54,6 +62,7 @@ export default function History({ navigation }) {
         .map((item) => Number(item.price))
         .reduce((prev, curr) => prev + curr, 0);
       setTotal(gTotal);
+      setLoading(false);
     }
     console.log(orderList);
 
@@ -66,7 +75,12 @@ export default function History({ navigation }) {
   }, [isFocused]);
 
   return (
-    <View>
+    
+    <View style={{flex:1}}>
+      <ImageBackground
+        source={require("../assets/images/bg-wallpaper5.jpg")}
+        style={{ height: "100%", width: "100%" }}
+      >
       <Modal
         animationType="fade"
         visible={modalVisible}
@@ -77,7 +91,7 @@ export default function History({ navigation }) {
         {modalContent(orderList, email, total)}
       </Modal>
       <Title text="History" />
-      <ScrollView style={{ marginBottom: 120 }}>
+      <ScrollView style={{ marginBottom: 10 }}>
         {history.length > 0 ? (
           history.map((item, index) => (
             <ListItem
@@ -99,6 +113,31 @@ export default function History({ navigation }) {
           </View>
         )}
       </ScrollView>
+
+      {loading ? (
+        <View
+          style={{
+            backgroundColor: "black",
+            position: "absolute",
+            opacity: 0.6,
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          <LottieView
+            style={{ height: 200 }}
+            source={require("../assets/animations/progress-bar.json")}
+            autoPlay
+            speed={1}
+            
+          />
+        </View>
+      ) : (
+        <></>
+      )}
+      </ImageBackground>
     </View>
   );
 }
@@ -138,7 +177,7 @@ export const ListItem = (props) => (
           justifyContent: "center",
         }}
       >
-        <Text>{'#'+props.no }</Text>
+        <Text style={{fontWeight:"bold"}}>{'#'+props.no }</Text>
         <Text style={{ marginLeft: 20 }}>{props.title}</Text>
       </View>
 
@@ -158,7 +197,7 @@ const ViewButton = ({ btntext, onPress, icon, color, size }) => (
   <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
     <View
       style={{
-        backgroundColor: icon === "trash" ? "red" : "#999999",
+        backgroundColor: icon === "trash" ? "red" : "darkorange",
         padding: 5,
         flexDirection: "row",
         borderRadius: 5,

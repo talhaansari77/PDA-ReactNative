@@ -9,9 +9,10 @@ export default function OrderItem({ item, status = "checkout", underline=TabRout
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
-        padding: 20,
+        padding: 15,
         borderBottomWidth:underline? 1:0,
         borderBottomColor: "#999",
+        // borderWidth:1,
       }}
     >
       <View>
@@ -32,8 +33,8 @@ export default function OrderItem({ item, status = "checkout", underline=TabRout
               fontWeight: "bold",
               justifyContent:"center",
               alignItems:"center",
-              marginTop:5,
-              color: status=='pending'?"darkorange":status=='delivered' ?"green":status=='cancelled'?"red":status=='checkout'?"blue":'orange',
+              marginTop:5,              
+              color: status=='pending'?"darkorange":status=='completed' ?"green":status=='cancelled'?"red":status=='checkout'?"blue":'purple',
             }}
           >
             {status}

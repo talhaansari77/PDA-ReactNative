@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import SellerSignup from "./SellerSignup";
 import { CurrentLocation } from "../Components/General/CurrentLocation";
 import { appColors } from "../assets/Colors/Colors";
+import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 
 export default function MainDrawer() {
   const Drawer = createDrawerNavigator();
@@ -76,6 +77,7 @@ export default function MainDrawer() {
         name="Cart"
         component={Cart}
         options={{
+          drawerItemStyle: { height: 0 },
           drawerIcon: ({ color }) => (
             <FontAwesome5 name="shopping-cart" size={22} color={color} />
           ),
@@ -110,15 +112,15 @@ export default function MainDrawer() {
         }}
       />
 
-      {/* <Drawer.Screen
+      <Drawer.Screen
         name="Exit"
         component={CloseApp}
         options={{
           drawerIcon: ({ color }) => (
-            <FontAwesome5 name="plus" size={22} color={color} />
+            <FontAwesome5Icon name="arrow-left" size={22} color={color} />
           ),
         }}
-      /> */}
+      />
     </Drawer.Navigator>
   );
 }

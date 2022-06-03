@@ -42,33 +42,35 @@ export default function HomeTabs({ navigation, route }) {
             display: "flex",
             justifyContent: "space-between",
             flexDirection: "row",
-            marginTop: 50,
+            marginTop: 35,
             alignItems: "center",
             paddingHorizontal: 30,
             // paddingEnd: 20,
           }}
         >
-          <FontAwesome5Icon
-            size={30}
-            color="#a2a2bd"
-            style={{ width: 20 }}
-            // icon={"bars"}
-            name="bars"
-            // onIconPress={() => console.log("first")}
-            onPress={() => navigation.openDrawer()}
-          />
+          <View style={{ padding: 10 }}>
+            <FontAwesome5Icon
+              size={25}
+              color="#a2a2bd"
+              style={{ width: 20 }}
+              // icon={"bars"}
+              name="bars"
+              // onIconPress={() => console.log("first")}
+              onPress={() => navigation.openDrawer()}
+            />
+          </View>
           <Image
             source={require("../assets/images/splash-logo.png")}
             style={{ height: "100%", width: "60%" }}
           />
-          <View>
+          <TouchableOpacity activeOpacity={0.7} >
             <FontAwesomeIcon
               size={25}
-              name="cart-arrow-down"
+              name="shopping-cart"
               onPress={() => navigation.navigate("Cart")}
             />
             <CartItemCounter items={items} />
-          </View>
+          </TouchableOpacity>
         </View>
         {/* <View style={{height:10}}></View> */}
         <View style={{ padding: 16 }}>

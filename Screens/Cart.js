@@ -137,7 +137,7 @@ export default function Cart({ navigation }) {
           <Button
             text={"Checkout"}
             color={appColors.black2}
-            txtColor={"#fff"}
+            txtColor={appColors.primary}
             size={20}
             onPress={() => addOrderToDataBase()}
           />
@@ -159,9 +159,10 @@ export default function Cart({ navigation }) {
         >
           <LottieView
             style={{ height: 200 }}
-            source={require("../assets/animations/scanner.json")}
+            source={require("../assets/animations/progress-bar.json")}
             autoPlay
-            speed={3}
+            speed={1}
+            
           />
         </View>
       ) : (

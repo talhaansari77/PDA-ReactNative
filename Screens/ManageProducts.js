@@ -8,23 +8,27 @@ import {
   BackHandler,
   ImageBackground,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ListHeader from "../Components/General/ListHeader";
 import { Provider } from "react-native-paper";
 import { useSelector } from "react-redux";
 import Title from "../Components/Auth/Title";
+import LottieView from "lottie-react-native";
 
 export default function ManageProducts({ navigation }) {
-  const [products, setProducts] = React.useState([]);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const menuId = useSelector(
     (state) => state.CreateUserReducer.activeUser.menuId
   );
   const getProducts = () => {
+    setLoading(true);
     fetch(Baseurl + "Products/Products.php")
       .then((response) => response.json())
-      .then((data) =>
-        setProducts(data.filter((item) => item.menuId === menuId))
-      );
+      .then((data) => {
+        setProducts(data.filter((item) => item.menuId === menuId));
+        setLoading(false);
+      });
 
     console.log(products[0]);
   };
@@ -43,29 +47,51 @@ export default function ManageProducts({ navigation }) {
         source={require("../assets/images/bg-wallpaper5.jpg")}
         style={{ height: "100%", width: "100%" }}
       >
-      {/* <ListHeader title={"ManageProducts"} size={25} /> */}
-      <Title text="Manage Products" />
+        {/* <ListHeader title={"ManageProducts"} size={25} /> */}
+        <Title text="Manage Products" />
 
-      <ScrollView
-        // refreshControl={
-        //   <RefreshControl refreshing={true} onRefresh={getProducts()} />
-        // }
-        showsVerticalScrollIndicator={false}
-        style={{ marginBottom: 10 }}
-      >
-        {products.map((product, index) => (
-          <ProductView
-            id={product.id}
-            title={product.title}
-            price={product.price}
-            desc={product.description}
-            img={product.imageUrl}
-            items={items}
-            key={index}
-            navigation={navigation}
-          />
-        ))}
-      </ScrollView>
+        <ScrollView
+          // refreshControl={
+          //   <RefreshControl refreshing={true} onRefresh={getProducts()} />
+          // }
+          showsVerticalScrollIndicator={false}
+          style={{ marginBottom: 10 }}
+        >
+          {products.map((product, index) => (
+            <ProductView
+              id={product.id}
+              title={product.title}
+              price={product.price}
+              desc={product.description}
+              img={product.imageUrl}
+              items={items}
+              key={index}
+              navigation={navigation}
+            />
+          ))}
+        </ScrollView>
+        {loading ? (
+          <View
+            style={{
+              backgroundColor: "black",
+              position: "absolute",
+              opacity: 0.6,
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+              width: "100%",
+            }}
+          >
+            <LottieView
+              style={{ height: 200 }}
+              source={require("../assets/animations/progress-bar.json")}
+              autoPlay
+              speed={1}
+            />
+          </View>
+        ) : (
+          <></>
+        )}
       </ImageBackground>
     </View>
   );

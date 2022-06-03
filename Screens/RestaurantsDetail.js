@@ -9,16 +9,21 @@ import Baseurl from "../Components/Auth/Baseurl";
 
 export default function RestaurantsDetail({ route, navigation }) {
   const [Food, setFood] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    // back to profile
-    // BackHandler.addEventListener("hardwareBackPress", () => {
-    //   navigation.navigate("Profile1");
-    // });
+  // back to profile
+  // BackHandler.addEventListener("hardwareBackPress", () => {
+  //   navigation.navigate("Profile1");
+  // });
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(Baseurl + "Products/GetProducts.php?menuId=" + route.params.shopId)
-      .then((res) => setFood(res.data));
+      .then((res) => {
+        setFood(res.data);
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -26,7 +31,11 @@ export default function RestaurantsDetail({ route, navigation }) {
       <About route={route} />
       {/* <Divider width={1.8} style={{marginVertical:20}}/> */}
       {route.params.pda ? (
-        <MenuItems restaurantName={route.params.name} Food={Food} />
+        <MenuItems
+          restaurantName={route.params.name}
+          Food={Food}
+          loading={loading}
+        />
       ) : (
         <></>
       )}

@@ -20,11 +20,14 @@ import OrderItem from "../Components/RestaurantsDetails/OrderItem";
 import { Divider } from "react-native-elements";
 import { FlatList } from "react-native-gesture-handler";
 import Button from "../Components/Auth/Button";
+import LottieView from "lottie-react-native";
+import { appColors } from "../assets/Colors/Colors";
 
 var counterForReload = 0;
 
 export default function ManageOrders({ navigation, route }) {
-  const isFocused = useIsFocused();
+  const isFocused = useIsFocused();  
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [counter, setCounter] = useState(0);
   const [history, setHistory] = useState([]);
@@ -38,6 +41,7 @@ export default function ManageOrders({ navigation, route }) {
   );
   // Orders LIst
   const GetOrders = async () => {
+    setLoading(true);
     let orderStatus = SetOrderStatusForPage(route.params.title);
     console.log("This is page title", orderStatus);
 
@@ -46,7 +50,8 @@ export default function ManageOrders({ navigation, route }) {
       JSON.stringify({ shopId, status: orderStatus })
     );
     if (response.data.status) {
-      setHistory(response.data.orders);
+      setHistory(response.data.orders.reverse());
+      setLoading(false);
     }
     console.log(history);
 
@@ -54,6 +59,7 @@ export default function ManageOrders({ navigation, route }) {
   };
   //Orders Details
   const GetOrderList = async (orderId) => {
+    setLoading(true);
     console.log(orderId, shopId, "<== 👉 IDS ");
     const response = await axios.get(
       Baseurl +
@@ -68,6 +74,7 @@ export default function ManageOrders({ navigation, route }) {
         .reduce((prev, curr) => prev + curr, 0);
       console.log(gTotal);
       setTotal(gTotal);
+      setLoading(false);
     }
     // console.log(orderList);
 
@@ -131,6 +138,29 @@ export default function ManageOrders({ navigation, route }) {
             </View>
           )}
         </ScrollView>
+        {loading ? (
+        <View
+          style={{
+            backgroundColor: "black",
+            position: "absolute",
+            opacity: 0.6,
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          <LottieView
+            style={{ height: 200 }}
+            source={require("../assets/animations/progress-bar.json")}
+            autoPlay
+            speed={1}
+            
+          />
+        </View>
+      ) : (
+        <></>
+      )}
       </ImageBackground>
     </View>
   );
@@ -179,15 +209,17 @@ export const modalContent = (
         ))}
       </ScrollView>
       {/*//! using this component for Total */}
+      <View>
       <OrderItem
         item={{ title: "--- Total ---" }}
         status={total + " pkr"}
         underline={false}
       />
+      </View>
       {pathName == "Pending-Orders" || pathName == "On-Way-Orders" ? (
         <Button
           text={"Update"}
-          color={"green"}
+          color={appColors.secondary}
           txtColor={"#fff"}
           size={15}
           btnSize={10}

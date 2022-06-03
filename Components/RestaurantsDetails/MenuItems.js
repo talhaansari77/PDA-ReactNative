@@ -12,6 +12,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useDispatch, useSelector } from "react-redux";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import { appColors } from "../../assets/Colors/Colors";
+import LottieView from "lottie-react-native";
 
 export default function MenuItems({
   restaurantName,
@@ -22,6 +23,7 @@ export default function MenuItems({
   placement = "none",
   onPressMinus,
   onPressPlus,
+  loading,
 }) {
   const dispatch = useDispatch();
   const addItem = (item, checkboxValue) =>
@@ -43,7 +45,7 @@ export default function MenuItems({
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {Food.length>0? ( 
+      {Food.length > 0 ? (
         Food.map((foodItem, index) => (
           <View key={index}>
             <View style={style.menuItemStyle}>
@@ -98,7 +100,17 @@ export default function MenuItems({
             paddingVertical: 50,
           }}
         >
-          <Text>No Item To Show</Text>
+          
+          {loading ? (
+            <LottieView
+              style={{ height: 100 }}
+              source={require("../../assets/animations/progress-bar.json")}
+              autoPlay
+              speed={1}
+            />
+          ) : (
+            <Text>This Shop Don't have Menu</Text>
+          )}
         </View>
       )}
     </ScrollView>
@@ -107,9 +119,9 @@ export default function MenuItems({
 
 const FoodInfo = (props) => (
   <View style={{ width: 240, justifyContent: "space-evenly" }}>
-    <View style={{flexDirection:"row", justifyContent: "space-between"}}>
-    <Text style={[style.black, style.title]}>{props.food.title}</Text>
-    {/* <FontAwesome5Icon style={{ marginRight: 50}} name="trash" size={20} color="red" /> */}
+    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+      <Text style={[style.black, style.title]}>{props.food.title}</Text>
+      {/* <FontAwesome5Icon style={{ marginRight: 50}} name="trash" size={20} color="red" /> */}
     </View>
     <Text style={style.black}>{props.food.description}</Text>
 
@@ -122,7 +134,7 @@ const FoodInfo = (props) => (
           alignItems: "center",
         }}
       >
-        <Text style={style.black}>{props.food.price+ " pkr"}</Text>
+        <Text style={style.black}>{props.food.price + " pkr"}</Text>
         {/* plus Minus Button */}
         {props.placement === "cart" ? (
           <View style={{ flexDirection: "row", marginRight: 20 }}>
@@ -139,9 +151,15 @@ const FoodInfo = (props) => (
                 backgroundColor: appColors.black2,
               }}
             >
-              <FontAwesome5Icon name={"minus"} size={15} color={appColors.primary} />
+              <FontAwesome5Icon
+                name={"minus"}
+                size={15}
+                color={appColors.primary}
+              />
             </TouchableOpacity>
-            <Text style={{ fontSize: 14, marginHorizontal: 10 }}>{props.food.qty}</Text>
+            <Text style={{ fontSize: 14, marginHorizontal: 10 }}>
+              {props.food.qty}
+            </Text>
             {/* Plus */}
             <TouchableOpacity
               onPress={props.onPressPlus}
@@ -155,7 +173,11 @@ const FoodInfo = (props) => (
                 backgroundColor: appColors.black2,
               }}
             >
-              <FontAwesome5Icon name={"plus"} size={15} color={appColors.primary} />
+              <FontAwesome5Icon
+                name={"plus"}
+                size={15}
+                color={appColors.primary}
+              />
             </TouchableOpacity>
           </View>
         ) : (
