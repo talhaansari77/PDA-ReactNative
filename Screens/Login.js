@@ -6,6 +6,7 @@ import Input from "../Components/Auth/Input";
 import Button, { Link } from "../Components/Auth/Button";
 import { useDispatch, useSelector } from "react-redux";
 import Baseurl from "../Components/Auth/Baseurl";
+import { appColors } from "../assets/Colors/Colors";
 
 export default function Login({ navigation }) {
   // var user = {};
@@ -51,8 +52,8 @@ export default function Login({ navigation }) {
   };
 
   return (
-    <SafeAreaView>
-      <Logo name={"user"} color={"orange"} size={150} />
+    <View>
+      <Logo name={"user"} color={appColors.secondary} size={150} />
       <Divider size={1} style={{ marginHorizontal: 50, marginTop: 10 }} />
 
       <Input
@@ -72,7 +73,7 @@ export default function Login({ navigation }) {
       <Button
         text={"Login"}
         size={20}
-        color={"darkorange"}
+        color={appColors.secondary}
         onPress={() => {
           SubmitLogin();
         }}
@@ -84,6 +85,6 @@ export default function Login({ navigation }) {
         desc={"New User ?"}
         pageName={"Signup"}
       />
-    </SafeAreaView>
+    </View>
   );
 }

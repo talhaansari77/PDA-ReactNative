@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  ToastAndroid,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Input from "../Components/Auth/Input";
@@ -13,6 +14,7 @@ import Baseurl from "../Components/Auth/Baseurl";
 import { useSelector } from "react-redux";
 import Button from "../Components/Auth/Button";
 import { OpenImageLib } from "./AddProducts";
+import { appColors } from "../assets/Colors/Colors";
 
 const emptyImage =
   "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg";
@@ -50,7 +52,7 @@ export default function ShopDetail({ navigation }) {
           },
         }
       )
-      .then((response) => console.log(response.data))
+      .then((response) => ToastAndroid.show("Image Uploaded", ToastAndroid.SHORT))
       .catch((error) => {
         Alert.alert("Something Went Wrong Please Try Again");
       });
@@ -167,7 +169,7 @@ export default function ShopDetail({ navigation }) {
       <View>
         <Button
           size={20}
-          color={"orange"}
+          color={appColors.secondary}
           text={"Save"}
           onPress={() => Submit()}
         />

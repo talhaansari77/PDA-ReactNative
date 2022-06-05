@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Alert } from "react-native";
+import { View, Text, SafeAreaView, Alert,ImageBackground } from "react-native";
 import React, { useState } from "react";
 import { Divider } from "react-native-elements/dist/divider/Divider";
 import Input from "../Components/Auth/Input";
@@ -7,6 +7,7 @@ import Title from "../Components/Auth/Title";
 import { useSelector } from "react-redux";
 import Baseurl from "../Components/Auth/Baseurl";
 import axios from "axios";
+import { appColors } from "../assets/Colors/Colors";
 
 export default function AddCategory() {
   const [category, setCategory] = useState("");
@@ -37,6 +38,10 @@ export default function AddCategory() {
 
   return (
     <SafeAreaView>
+      <ImageBackground
+        source={require("../assets/images/bg-wallpaper5.jpg")}
+        style={{ width: "100%", height: "100%" }}
+      >
       <Title text={"Add-Category"} />
       <Input
         value={category}
@@ -46,12 +51,13 @@ export default function AddCategory() {
       <Divider width={1} style={{ margin: 50 }} />
       <Button
         text={"Add"}
-        color={"darkorange"}
+        color={appColors.secondary}
         size={20}
         onPress={() => {
           Submit();
         }}
       />
+      </ImageBackground>
     </SafeAreaView>
   );
 }

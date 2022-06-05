@@ -50,10 +50,12 @@ export default function StackHome({ navigation, route }) {
   const [searchTerm, setSearchTerm] = useState("Punjab");
   // const [activeTab, setActiveTab] = useState("Delivery");
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [load, setLoad] = useState(10);
   const { items } = useSelector((state) => state.cartReducer.selectedItems);
 
   const getDataFromApi = (load, s = searchTerm) => {
+    setIsLoadingMore(true);
     s = s ? s : "Punjab";
     s = s.replace(/^\s+|\s+$/gm, "").toLowerCase();
 
@@ -73,6 +75,7 @@ export default function StackHome({ navigation, route }) {
           )
         );
         setIsLoading(false);
+        setIsLoadingMore(false);
         console.log("Loading", route.params.locationText, "<==");
       });
   };
@@ -133,6 +136,7 @@ export default function StackHome({ navigation, route }) {
             restaurantData={restaurantData}
             navigation={navigation}
             isLoading={isLoading}
+            isLoadingMore={isLoadingMore}
             setIsLoading={setIsLoading}
             getDataFromApi={getDataFromApi}
             load={load}

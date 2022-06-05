@@ -1,16 +1,13 @@
 import {
   View,
   Text,
-  SafeAreaView,
   ScrollView,
-  TouchableOpacity,
   Modal,
   BackHandler,
   ImageBackground,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Title from "../Components/Auth/Title";
-import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import axios from "axios";
 import Baseurl from "../Components/Auth/Baseurl";
 import { useSelector } from "react-redux";
@@ -18,7 +15,6 @@ import { useIsFocused } from "@react-navigation/native";
 import { ListItem } from "./History";
 import OrderItem from "../Components/RestaurantsDetails/OrderItem";
 import { Divider } from "react-native-elements";
-import { FlatList } from "react-native-gesture-handler";
 import Button from "../Components/Auth/Button";
 import LottieView from "lottie-react-native";
 import { appColors } from "../assets/Colors/Colors";

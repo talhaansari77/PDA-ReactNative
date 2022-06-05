@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Divider } from "react-native-elements/dist/divider/Divider";
 import Input from "../Components/Auth/Input";
 import Button, { Link } from "../Components/Auth/Button";
+import { appColors } from "../assets/Colors/Colors";
 
 const Signup = ({ navigation }) => {
 
@@ -79,7 +80,7 @@ const Signup = ({ navigation }) => {
         <Button
           text={"Sign-up"}
           size={20}
-          color={"darkorange"}
+          color={appColors.secondary}
           onPress={() => {
             SubmitLogin();
           }}
@@ -102,7 +103,7 @@ export default Signup;
 const styles = StyleSheet.create({
   sh: {
     fontSize: 25,
-    color: "darkorange",
+    color: appColors.secondary,
     textDecorationLine: "underline",
     fontWeight: "bold",
     marginLeft: 20,

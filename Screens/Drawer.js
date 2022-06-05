@@ -59,7 +59,7 @@ export default function MainDrawer() {
         component={SellerSignup}
         options={{
           drawerIcon: ({ color }) => (
-            <FontAwesome5 name="store" size={22} color={color} />
+            <FontAwesome5 name="store" size={17} color={color} />
           ),
         }}
       />
@@ -67,7 +67,7 @@ export default function MainDrawer() {
         name="Profile"
         component={SellerNavs}
         options={{
-          drawerItemStyle: { height: status ? "13%" : 0 },
+          drawerItemStyle: { display:status ? "flex" : "none" },
           drawerIcon: ({ color }) => (
             <FontAwesome5 name="user" size={22} color={color} />
           ),
@@ -106,6 +106,7 @@ export default function MainDrawer() {
         name="Login"
         component={Auth}
         options={{
+          drawerItemStyle: { display:!status ? "flex" : "none" },
           drawerIcon: ({ color }) => (
             <FontAwesome5 name="lock" size={22} color={color} />
           ),
@@ -117,7 +118,7 @@ export default function MainDrawer() {
         component={CloseApp}
         options={{
           drawerIcon: ({ color }) => (
-            <FontAwesome5Icon name="arrow-left" size={22} color={color} />
+            <FontAwesome5Icon name="arrow-left" size={20} color={color} />
           ),
         }}
       />

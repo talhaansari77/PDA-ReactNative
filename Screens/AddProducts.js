@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Alert } from "react-native";
+import { View, Text, SafeAreaView, Alert, ImageBackground } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Divider } from "react-native-elements/dist/divider/Divider";
 import Input from "../Components/Auth/Input";
@@ -9,6 +9,7 @@ import ImageUploader from "../Components/Auth/ImageUploader";
 import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
 import { useSelector } from "react-redux";
+import { appColors } from "../assets/Colors/Colors";
 
 export default function AddProducts() {
   const [imageUrl, setImage] = useState("");
@@ -79,6 +80,10 @@ export default function AddProducts() {
   }, []);
   return (
     <SafeAreaView>
+      <ImageBackground
+        source={require("../assets/images/bg-wallpaper5.jpg")}
+        style={{ height: "100%", width: "100%" }}
+      >
       <Title text={"Add-Products"} />
       <Input
         value={title}
@@ -100,7 +105,8 @@ export default function AddProducts() {
       {/* Cat DropDown */}
       <Dropdown value={catId} setValue={setCatId} list={catList} />
       <Divider width={1} style={{ margin: 50 }} />
-      <Button text={"Add"} color={"darkorange"} size={20} onPress={Submit} />
+      <Button text={"Add"} color={appColors.secondary} size={20} onPress={Submit} />
+      </ImageBackground>
     </SafeAreaView>
   );
 }

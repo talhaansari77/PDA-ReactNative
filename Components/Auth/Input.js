@@ -14,6 +14,7 @@ export default function Input({ iconname, ...props }) {
           padding: 5,
           marginTop: 15,
           borderColor: "#878787",
+          backgroundColor:"#fff"
         }}
       >
         <View style={{ justifyContent: "center", alignItems: "center" }}>

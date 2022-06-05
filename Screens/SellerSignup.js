@@ -1,9 +1,10 @@
-import { Alert, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { Divider } from "react-native-elements/dist/divider/Divider";
 import Input from "../Components/Auth/Input";
 import Button, { Link } from "../Components/Auth/Button";
 import { Picker } from "@react-native-picker/picker";
+import { appColors } from "../assets/Colors/Colors";
 
 const SellerSignup = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState("");
@@ -52,13 +53,14 @@ const SellerSignup = ({ navigation }) => {
 
   return (
     <SafeAreaView>
+      
       <View style={styles.shc}>
         <View>
           <Text style={styles.sh}>Signup as Seller</Text>
         </View>
       </View>
-
       <View style={styles.mt5}>
+      <ScrollView>
         <Input
           placeholder="Enter Email"
           keyboardType="email-address"
@@ -80,9 +82,10 @@ const SellerSignup = ({ navigation }) => {
         <Input
           placeholder="CNIC 34xxx-xxxxxxx-x"
           keyboardType="numeric"
-          iconname={"user"}
+          iconname={"id-card"}
           onChangeText={(text) => setUserCnic(text)}
         />
+
         <Input
           placeholder="03xxxxxxxxx"
           keyboardType="numeric"
@@ -91,7 +94,7 @@ const SellerSignup = ({ navigation }) => {
         />
         <Input
           placeholder="Business"
-          iconname={"shopping-bag"}
+          iconname={"store"}
           onChangeText={(text) => setUserBusiness(text)}
         />
 
@@ -107,7 +110,7 @@ const SellerSignup = ({ navigation }) => {
 
         <Input
           placeholder="City"
-          iconname={"user"}
+          iconname={"map-marker-alt"}
           onChangeText={(text) => setUserCity(text)}
         />
         {/* <Divider size={1} style={{ marginHorizontal: 50, marginTop: 10 }} /> */}
@@ -115,11 +118,12 @@ const SellerSignup = ({ navigation }) => {
         <Button
           text={"Sign-up"}
           size={20}
-          color={"darkorange"}
+          color={appColors.secondary}
           onPress={() => {
             SubmitLogin();
           }}
         />
+        </ScrollView>
       </View>
     </SafeAreaView>
   );

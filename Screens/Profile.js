@@ -53,7 +53,7 @@ export default function Profile({ navigation, route }) {
         style={{ height: "100%", width: "100%" }}
       >
       <SafeAreaView>
-        <ProfileHead name={name} email={email} />
+        <ProfileHead name={name} email={email} navigation={navigation} />
         {/* My Profile */}
         <Title />
         {/* Creat Shop First */}
@@ -101,6 +101,12 @@ export default function Profile({ navigation, route }) {
               icon={"store"}
               navigation={navigation}              
               path={"ShopDetail"}
+            />
+            <ProfileNav
+              name={"Monthly Reports"}
+              icon={"receipt"}
+              navigation={navigation}              
+              path={"Reports"}
             />
           </ScrollView>
         ) : (

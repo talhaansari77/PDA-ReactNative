@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Platform,
   Alert,
+  ToastAndroid,
 } from "react-native";
 import React, { useState } from "react";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
@@ -17,7 +18,7 @@ import axios from "axios";
 import Baseurl from "../Auth/Baseurl";
 import { useSelector } from "react-redux";
 
-export default function ProfileHead(props) {
+export default function ProfileHead({navigation, ...props}) {
   const [image, setImage] = useState("");
   const { id, picture } = useSelector(
     (state) => state.CreateUserReducer.activeUser.user
@@ -45,9 +46,13 @@ export default function ProfileHead(props) {
           },
         }
       )
-      .then((response) => console.log(response.data))
+      .then((response) => {
+        ToastAndroid.show("Image Uploaded", ToastAndroid.SHORT);
+        setImage("");
+      })
       .catch((error) => {
         Alert.alert("Something Went Wrong Please Try Again");
+        setImage("");
       });
     // console.log(formdata);
   };
@@ -116,14 +121,18 @@ export default function ProfileHead(props) {
               {props.email}
             </Text>
           </View>
-          <View style={{ justifyContent: "center", marginLeft: 20 }}>
+          <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => navigation.navigate("EditProfile")}
+            style={{ justifyContent: "center", marginLeft: 20 }}
+          >
             <FontAwesome5Icon
               name={"edit"}
               size={25}
               color={appColors.black2}
               style={{ marginLeft: 10 }}
             />
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
       <Divider width={1} />
