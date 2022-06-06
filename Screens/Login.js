@@ -13,6 +13,7 @@ import Input from "../Components/Auth/Input";
 import Button, { Link } from "../Components/Auth/Button";
 import { useDispatch, useSelector } from "react-redux";
 import Baseurl from "../Components/Auth/Baseurl";
+import { appColors } from "../assets/Colors/Colors";
 
 export default function Login({ navigation }) {
   // var user = {};
@@ -58,6 +59,7 @@ export default function Login({ navigation }) {
   };
 
   return (
+
     <SafeAreaView>
       <ImageBackground
         source={require("../assets/images/login-page-1.png")}
@@ -108,5 +110,6 @@ export default function Login({ navigation }) {
         />
       </ImageBackground>
     </SafeAreaView>
+
   );
 }

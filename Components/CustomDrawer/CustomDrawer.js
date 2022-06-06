@@ -31,7 +31,7 @@ export default function CustomDrawer({ locationText, status, ...props }) {
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{ backgroundColor: appColors.secondary }}
+        contentContainerStyle={{ backgroundColor: "#FD703B" }}
       >
         <ImageBackground
           source={require("../../assets/images/bg4.jpg")}

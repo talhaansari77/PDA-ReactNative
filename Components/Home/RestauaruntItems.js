@@ -106,17 +106,28 @@ export default function RestauaruntItems({ navigation, ...props }) {
                 alignSelf: "center",
                 marginBottom: 180,
                 borderRadius: 20,
+                width: "30%",
+                alignItems: "center",
               }}
             >
               <View>
-                <Text
-                  style={{
-                    fontWeight: "700",
-                    color: "#3f3f3f",
-                  }}
-                >
-                  Load More
-                </Text>
+                {props.isLoadingMore ? (
+                  <LottieView
+                    style={{ height: 30 }}
+                    source={require("../../assets/animations/progress-bar.json")}
+                    autoPlay
+                    speed={1}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      fontWeight: "700",
+                      color: "#3f3f3f",
+                    }}
+                  >
+                    Load More
+                  </Text>
+                )}
               </View>
             </TouchableOpacity>
           )}

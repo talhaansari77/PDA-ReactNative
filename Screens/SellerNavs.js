@@ -10,6 +10,8 @@ import CreateShop from "./CreateShop";
 import ManageCategories from "./ManageCategories";
 import ShopDetail from "./ShopDetail";
 import ProductDetail from "./ProductDetail";
+import EditProfile from "./EditProfile";
+import Reports from "./Reports";
 
 
 export default function SellerNavs({navigation}) {
@@ -17,6 +19,7 @@ export default function SellerNavs({navigation}) {
   return (
     <Stack.Navigator initialRouteName="" screenOptions={screenOptions}>
       <Stack.Screen name="Profile1" component={Profile} />
+      <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="AddProducts" component={AddProducts} />
       <Stack.Screen name="AddCategory" component={AddCategory} />
       <Stack.Screen name="ManageOrders" navigation={navigation} component={ManageOrders} />      
@@ -28,6 +31,7 @@ export default function SellerNavs({navigation}) {
       <Stack.Screen name="CompletedOrders" component={ManageProducts} /> */}
       <Stack.Screen name="ProductDetail" component={ProductDetail} />
       <Stack.Screen name="ShopDetail" component={ShopDetail} />
+      <Stack.Screen name="Reports" component={Reports} />
       
     </Stack.Navigator>
   );

@@ -1,12 +1,4 @@
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  Alert,
-  SafeAreaView,
-} from "react-native";
+import { View, Alert, SafeAreaView } from "react-native";
 import React, { useEffect, useState } from "react";
 import Input from "../Components/Auth/Input";
 import axios from "axios";
@@ -17,12 +9,14 @@ import { Dropdown, OpenImageLib } from "./AddProducts";
 import Title from "../Components/Auth/Title";
 import ImageUploader from "../Components/Auth/ImageUploader";
 import { Divider } from "react-native-elements/dist/divider/Divider";
+import { appColors } from "../assets/Colors/Colors";
+import LottieView from "lottie-react-native";
 
-const emptyImage =
+export const emptyImage =
   "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg";
 
 export default function ProductDetail({ route, navigation }) {
-  const pId=route.params.id;
+  const pId = route.params.id;
   const [productDetail, setProductDetail] = useState({});
   const [imageUrl, setImage] = useState("");
   const [title, setTitle] = useState("");
@@ -30,6 +24,7 @@ export default function ProductDetail({ route, navigation }) {
   const [description, setDescription] = useState("");
   const [catId, setCatId] = useState("");
   const [catList, setCatList] = useState([]);
+  const [loading, setLoading] = useState(false);
   // getting shop data from redux
   const menuId = useSelector(
     (state) => state.CreateUserReducer.activeUser.menuId
@@ -37,35 +32,8 @@ export default function ProductDetail({ route, navigation }) {
   const shopId = useSelector(
     (state) => state.CreateUserReducer.activeUser.user.shopId
   );
-  //   const UploadImage = () => {
-  //     const formdata = new FormData();
-  //     const imgToUpload = {
-  //       type: "image/jpeg",
-  //       name: "ImageToUpload",
-  //       uri: imageUrl,
-  //     };
-  //     formdata.append("picture", imgToUpload);
-  //     // formdata.append("name", "Test123");
-  //     axios
-  //       .post(
-  //         `https://pda.dreamhosters.com/imageUploader.php?id=${shopDetail.id}&table=shops`,
-  //         formdata,
-  //         {
-  //           headers: {
-  //             "Content-Type": "multipart/form-data",
-  //           },
-  //           transformRequest: (data, headers) => {
-  //             return formdata; // this is doing the trick
-  //           },
-  //         }
-  //       )
-  //       .then((response) => console.log(response.data))
-  //       .catch((error) => {
-  //         Alert.alert("Something Went Wrong Please Try Again");
-  //       });
-  //     // console.log(formdata);
-  //   };
 
+  loading;
   const DeleteProduct = async () => {
     const requestOptions = {
       method: "POST",
@@ -82,7 +50,7 @@ export default function ProductDetail({ route, navigation }) {
           Alert.alert(data.Message);
         }
       });
-  }
+  };
   const Submit = async () => {
     if (
       title.length > 0 &&
@@ -126,8 +94,9 @@ export default function ProductDetail({ route, navigation }) {
       Alert.alert("Please fill all the fields");
     }
   };
-  
+
   useEffect(() => {
+    setLoading(true);
     //   dropdown data
     axios
       .get(Baseurl + "Categories/Category.php")
@@ -146,6 +115,7 @@ export default function ProductDetail({ route, navigation }) {
         setDescription(response.data.description);
         // show in console
         console.log(response.data);
+        setLoading(false);
       });
   }, []);
 
@@ -172,14 +142,42 @@ export default function ProductDetail({ route, navigation }) {
       {/* Cat DropDown */}
       <Dropdown value={catId} setValue={setCatId} list={catList} />
       <Divider width={1} style={{ margin: 50 }} />
-      <Button text={"Save"} color={"darkorange"} size={20} onPress={Submit} />
+      <Button
+        text={"Save"}
+        color={appColors.secondary}
+        size={20}
+        onPress={Submit}
+      />
 
       <Button
         text={"Delete"}
-        color={"red"}
+        color={appColors.red}
+        txtColor={appColors.primary}
         size={20}
         onPress={DeleteProduct}
       />
+      {loading ? (
+        <View
+          style={{
+            backgroundColor: "black",
+            position: "absolute",
+            opacity: 0.6,
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          <LottieView
+            style={{ height: 200 }}
+            source={require("../assets/animations/progress-bar.json")}
+            autoPlay
+            speed={1}
+          />
+        </View>
+      ) : (
+        <></>
+      )}
     </SafeAreaView>
   );
 }

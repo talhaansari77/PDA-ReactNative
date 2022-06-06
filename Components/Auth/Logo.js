@@ -1,6 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import { appColors } from "../../assets/Colors/Colors";
 
 export default function Logo(props) {
   return (
@@ -15,7 +16,7 @@ export default function Logo(props) {
         <View
           style={{
             borderWidth: 5,
-            borderColor: "orange",
+            borderColor: appColors.secondary,
             borderRadius: 500,
             width: "65%",
             height: 240,
