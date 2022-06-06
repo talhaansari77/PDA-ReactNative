@@ -27,8 +27,6 @@ export default function SellerNavs({navigation}) {
       {/* subMenus */}
       <Stack.Screen name="ManageCategories" component={ManageCategories} />
       <Stack.Screen name="ManageProducts" component={ManageProducts} />
-      {/* <Stack.Screen name="OnWayOrders" component={ManageProducts} />
-      <Stack.Screen name="CompletedOrders" component={ManageProducts} /> */}
       <Stack.Screen name="ProductDetail" component={ProductDetail} />
       <Stack.Screen name="ShopDetail" component={ShopDetail} />
       <Stack.Screen name="Reports" component={Reports} />

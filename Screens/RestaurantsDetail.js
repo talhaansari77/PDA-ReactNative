@@ -11,7 +11,7 @@ import Map from "./Map";
 export default function RestaurantsDetail({ route, navigation }) {
   const [Food, setFood] = useState([]);
   const [loading, setLoading] = useState(false);
-
+ console.log(route.params.lat, '🖐 here is the lat');
   // back to profile
   // BackHandler.addEventListener("hardwareBackPress", () => {
   //   navigation.navigate("Profile1");
@@ -38,7 +38,7 @@ export default function RestaurantsDetail({ route, navigation }) {
           loading={loading}
         />
       ) : (
-        <Map />
+        <Map lat={route.params.lat} lng={route.params.lng}/>
       )}
 
       <ViewCart navigation={navigation} restaurantName={route.params.name} />

@@ -1,11 +1,25 @@
 import * as React from "react";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 
-export default function Map() {
+export default function Map({ lat, lng }) {
+  console.log(lat, "🖐 here is the lat");
+  console.log(lng, "🖐 here is the lat");
+  const region = {
+    latitude: lat,
+    longitude: lng,
+    latitudeDelta: 0.0000,
+    longitudeDelta: 0.0031,
+  };
+
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} />
+      <MapView region={region} style={styles.map} >
+      <Marker
+  coordinate={{ latitude : lat , longitude : lng }}
+  // image={{uri: 'custom_pin'}}
+/>
+      </MapView>
     </View>
   );
 }

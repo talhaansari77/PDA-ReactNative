@@ -74,6 +74,8 @@ export default function RestauaruntItems({ navigation, ...props }) {
                   phone: item.phone,
                   mapMarker: item.url,
                   pda: props.pda ? props.pda : false,
+                  lat: item.location.lat,
+                  lng: item.location.lng,
                 })
               }
             >
