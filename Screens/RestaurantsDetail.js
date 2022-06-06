@@ -6,6 +6,7 @@ import MenuItems from "../Components/RestaurantsDetails/MenuItems";
 import ViewCart from "../Components/RestaurantsDetails/ViewCart";
 import axios from "axios";
 import Baseurl from "../Components/Auth/Baseurl";
+import Map from "./Map";
 
 export default function RestaurantsDetail({ route, navigation }) {
   const [Food, setFood] = useState([]);
@@ -37,7 +38,7 @@ export default function RestaurantsDetail({ route, navigation }) {
           loading={loading}
         />
       ) : (
-        <></>
+        <Map />
       )}
 
       <ViewCart navigation={navigation} restaurantName={route.params.name} />

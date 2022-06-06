@@ -7,6 +7,7 @@ import {
   FlatList,
   RefreshControl,
   Dimensions,
+  SkeletonContent,
 } from "react-native";
 
 import Categories from "./Categories";
@@ -14,6 +15,7 @@ import React, { useEffect, useState } from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { netConnection } from "../General/connection";
 import LottieView from "lottie-react-native";
+import Demo from "../../Screens/Demo";
 
 export default function RestauaruntItems({ navigation, ...props }) {
   const [netStatus, setNetStatus] = useState({ type: "", isConnected: false });
@@ -44,12 +46,7 @@ export default function RestauaruntItems({ navigation, ...props }) {
           }}
         >
           {netStatus.isConnected ? (
-            <LottieView
-              style={{ height: 200 }}
-              source={require("../../assets/animations/progress-bar.json")}
-              autoPlay
-              speed={1}
-            />
+            <Demo />
           ) : (
             <Text style={{ fontWeight: "bold", color: "#fff" }}>
               No Internet Connection
