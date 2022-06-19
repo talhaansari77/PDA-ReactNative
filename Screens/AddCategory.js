@@ -8,15 +8,19 @@ import { useSelector } from "react-redux";
 import Baseurl from "../Components/Auth/Baseurl";
 import axios from "axios";
 import { appColors } from "../assets/Colors/Colors";
+import LottieView from "lottie-react-native";
+
 
 export default function AddCategory() {
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("");  
+  const [loading, setLoading] = useState(false);
   const menuId = useSelector(
     (state) => state.CreateUserReducer.activeUser.menuId
   );
 
   const Submit = () => {
     if (category.length > 0) {
+      setLoading(true);
       axios
         .post(
           Baseurl + "Categories/Category.php",
@@ -27,12 +31,15 @@ export default function AddCategory() {
         )
         .then((response) => {
           if (response.data.status) {
+            setLoading(false);
             Alert.alert("Category Added");
             setCategory("");
           } else {
             Alert.alert(response.data.Message);
           }
         });
+    }else{
+      Alert.alert("Please fill all the fields");
     }
   };
 
@@ -57,6 +64,29 @@ export default function AddCategory() {
           Submit();
         }}
       />
+      {loading ? (
+        <View
+          style={{
+            backgroundColor: "black",
+            position: "absolute",
+            opacity: 0.6,
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          <LottieView
+            style={{ height: 200 }}
+            source={require("../assets/animations/progress-bar.json")}
+            autoPlay
+            speed={1}
+            
+          />
+        </View>
+      ) : (
+        <></>
+      )}
       </ImageBackground>
     </SafeAreaView>
   );

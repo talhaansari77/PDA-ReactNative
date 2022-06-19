@@ -10,8 +10,10 @@ import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
 import { useSelector } from "react-redux";
 import { appColors } from "../assets/Colors/Colors";
+import LottieView from "lottie-react-native";
 
 export default function AddProducts() {
+  const [loading, setLoading] = useState(false);
   const [imageUrl, setImage] = useState("");
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
@@ -32,6 +34,7 @@ export default function AddProducts() {
       description.length > 0 &&
       imageUrl.length > 0
     ) {
+      setLoading(true);
       //form data for image upload
       const formdata = new FormData();
       const imgToUpload = {
@@ -58,6 +61,7 @@ export default function AddProducts() {
         })
         .then((response) => {
           if (response.data.status) {
+            setLoading(false);
             Alert.alert("Product Added");
             setTitle("");
             setPrice("");
@@ -67,10 +71,11 @@ export default function AddProducts() {
             Alert.alert(response.data.Message);
           }
         });
+    }else{
+      Alert.alert("Please fill all the fields");
     }
   };
 
-  
   useEffect(() => {
     axios
       .get(Baseurl + "Categories/Category.php")
@@ -84,28 +89,58 @@ export default function AddProducts() {
         source={require("../assets/images/bg-wallpaper5.jpg")}
         style={{ height: "100%", width: "100%" }}
       >
-      <Title text={"Add-Products"} />
-      <Input
-        value={title}
-        placeholder={"Product Name"}
-        onChangeText={(text) => setTitle(text)}
-      />
-      <Input
-        value={price}
-        placeholder={"Price"}
-        keyboardType={"numeric"}
-        onChangeText={(text) => setPrice(text)}
-      />
-      <ImageUploader onPress={() => OpenImageLib(setImage)} image={imageUrl} />
-      <Input
-        value={description}
-        placeholder={"Description"}
-        onChangeText={(text) => setDescription(text)}
-      />
-      {/* Cat DropDown */}
-      <Dropdown value={catId} setValue={setCatId} list={catList} />
-      <Divider width={1} style={{ margin: 50 }} />
-      <Button text={"Add"} color={appColors.secondary} size={20} onPress={Submit} />
+        <Title text={"Add-Products"} />
+        <Input
+          value={title}
+          placeholder={"Product Name"}
+          onChangeText={(text) => setTitle(text)}
+        />
+        <Input
+          value={price}
+          placeholder={"Price"}
+          keyboardType={"numeric"}
+          onChangeText={(text) => setPrice(text)}
+        />
+        <ImageUploader
+          onPress={() => OpenImageLib(setImage)}
+          image={imageUrl}
+        />
+        <Input
+          value={description}
+          placeholder={"Description"}
+          onChangeText={(text) => setDescription(text)}
+        />
+        {/* Cat DropDown */}
+        <Dropdown value={catId} setValue={setCatId} list={catList} />
+        <Divider width={1} style={{ margin: 50 }} />
+        <Button
+          text={"Add"}
+          color={appColors.secondary}
+          size={20}
+          onPress={Submit}
+        />
+        {loading ? (
+          <View
+            style={{
+              backgroundColor: "black",
+              position: "absolute",
+              opacity: 0.6,
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+              width: "100%",
+            }}
+          >
+            <LottieView
+              style={{ height: 200 }}
+              source={require("../assets/animations/progress-bar.json")}
+              autoPlay
+              speed={1}
+            />
+          </View>
+        ) : (
+          <></>
+        )}
       </ImageBackground>
     </SafeAreaView>
   );

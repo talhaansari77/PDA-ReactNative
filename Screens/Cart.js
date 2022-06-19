@@ -123,14 +123,26 @@ export default function Cart({ navigation }) {
         showsVerticalScrollIndicator={false}
         style={{ marginBottom: 0 }}
       >
-        <MenuItems
-          Food={items}
-          hideCheckbox={true}
-          placement={"cart"}
-          marginRight={20}
-          onPressMinus={qtyMinusOne}
-          onPressPlus={qtyPlusOne}
-        />
+        {items.length > 0 ? (
+          <MenuItems
+            Food={items}
+            hideCheckbox={true}
+            placement={"cart"}
+            marginRight={20}
+            onPressMinus={qtyMinusOne}
+            onPressPlus={qtyPlusOne}
+          />
+        ) : (
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              paddingVertical: 50,
+            }}
+          >
+            <Text>Your Cart is Empty</Text>
+          </View>
+        )}
       </ScrollView>
       {total ? (
         <View style={{ padding: 10 }}>
@@ -162,7 +174,6 @@ export default function Cart({ navigation }) {
             source={require("../assets/animations/progress-bar.json")}
             autoPlay
             speed={1}
-            
           />
         </View>
       ) : (

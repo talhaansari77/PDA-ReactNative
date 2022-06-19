@@ -1,4 +1,4 @@
-import { View, Alert, SafeAreaView } from "react-native";
+import { View, Alert, SafeAreaView, ImageBackground } from "react-native";
 import React, { useEffect, useState } from "react";
 import Input from "../Components/Auth/Input";
 import axios from "axios";
@@ -35,6 +35,7 @@ export default function ProductDetail({ route, navigation }) {
 
   loading;
   const DeleteProduct = async () => {
+    setLoading(true);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -45,8 +46,10 @@ export default function ProductDetail({ route, navigation }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.status) {
+          setLoading(false);
           navigation.navigate("ManageProducts");
         } else {
+          setLoading(false);
           Alert.alert(data.Message);
         }
       });
@@ -121,6 +124,10 @@ export default function ProductDetail({ route, navigation }) {
 
   return (
     <SafeAreaView>
+       <ImageBackground
+        source={require("../assets/images/bg-wallpaper5.jpg")}
+        style={{ width: "100%", height: "100%" }}
+      >
       <Title text={"Edit-Product"} />
       <Input
         value={title}
@@ -178,6 +185,7 @@ export default function ProductDetail({ route, navigation }) {
       ) : (
         <></>
       )}
+      </ImageBackground>
     </SafeAreaView>
   );
 }

@@ -33,6 +33,7 @@ export default function ManageCategories({ navigation }) {
   };
 
   const DeleteCategory = (id) => {
+    setLoading(true);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -43,8 +44,10 @@ export default function ManageCategories({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.status) {
+          setLoading(false);
           getCategories();
         } else {
+          setLoading(false);
           Alert.alert(data.Message);
         }
       });

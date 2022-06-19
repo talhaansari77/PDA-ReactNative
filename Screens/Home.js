@@ -56,7 +56,8 @@ export default function StackHome({ navigation, route }) {
 
   const getDataFromApi = (load, s = searchTerm) => {
     setIsLoadingMore(true);
-    s = s ? s : "Punjab";
+    s = s ? s: "Punjab";
+    load = s !=="Punjab" ? 999: load;
     s = s.replace(/^\s+|\s+$/gm, "").toLowerCase();
 
     const MapsApi = route.params.baseUrl + load;

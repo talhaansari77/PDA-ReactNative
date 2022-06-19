@@ -1,4 +1,4 @@
-import { Alert, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Alert, Dimensions, ImageBackground, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { Divider } from "react-native-elements/dist/divider/Divider";
 import Input from "../Components/Auth/Input";
@@ -44,6 +44,21 @@ const Signup = ({ navigation }) => {
 
   return (
     <SafeAreaView>
+      <ImageBackground
+        source={require("../assets/images/login-page-1.png")}
+        style={{
+          // width: "100%",
+          height: "100%",
+          width: Dimensions.get("window").width,
+          // height: Dimensions.get("window").height,
+          // position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: -1,
+        }}
+      >
       <View style={styles.shc}>
         <View>
           <Text style={styles.sh}>Signup</Text>
@@ -94,6 +109,7 @@ const Signup = ({ navigation }) => {
           pageName={"SellerSignup"}
         />
       </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
@@ -113,7 +129,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingTop: 50,
     paddingBottom: 20,
-    backgroundColor: "#eee",
+    // backgroundColor: "#eee",
     borderBottomStartRadius: 30,
     borderBottomEndRadius: 30,
     width: "100%",

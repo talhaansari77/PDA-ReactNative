@@ -6,6 +6,7 @@ import {
   ScrollView,
   Alert,
   ToastAndroid,
+  ImageBackground,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Input from "../Components/Auth/Input";
@@ -103,6 +104,10 @@ export default function ShopDetail({ navigation }) {
 
   return (
     <View>
+       <ImageBackground
+        source={require("../assets/images/bg-wallpaper5.jpg")}
+        style={{ width: "100%", height: "100%" }}
+      >
       <View>
         <TouchableOpacity
           activeOpacity={0.5}
@@ -174,6 +179,7 @@ export default function ShopDetail({ navigation }) {
           onPress={() => Submit()}
         />
       </View>
+      </ImageBackground>
     </View>
   );
 }
