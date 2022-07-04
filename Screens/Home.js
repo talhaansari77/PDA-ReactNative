@@ -56,6 +56,7 @@ export default function StackHome({ navigation, route }) {
 
   const getDataFromApi = (load, s = searchTerm) => {
     setIsLoadingMore(true);
+    // setIsLoading(true);
     s = s ? s: "Punjab";
     load = s !=="Punjab" ? 999: load;
     s = s.replace(/^\s+|\s+$/gm, "").toLowerCase();

@@ -113,7 +113,7 @@ export default function MainDrawer() {
         }}
       />
 
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="Exit"
         component={CloseApp}
         options={{
@@ -121,7 +121,7 @@ export default function MainDrawer() {
             <FontAwesome5Icon name="arrow-left" size={20} color={color} />
           ),
         }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 }

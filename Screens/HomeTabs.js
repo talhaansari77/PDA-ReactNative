@@ -5,7 +5,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import StackHome, { CartItemCounter } from "./Home";
@@ -26,7 +26,7 @@ export default function HomeTabs({ navigation, route }) {
   const pharmacyUrl = Baseurl + "PharmacyGRW/GetPharmacy.php?limit=";
   const pdaShop = Baseurl + "Shops/GetShops.php?limit=";
   const { items } = useSelector((state) => state.cartReducer.selectedItems);
-
+  const [searchTerm, setSearchTerm] = useState("Punjab");
   console.log(route.params.locationText, "route.params.locationText");
 
   useEffect(() => {}, [items]);
@@ -74,7 +74,7 @@ export default function HomeTabs({ navigation, route }) {
         </View>
         {/* <View style={{height:10}}></View> */}
         <View style={{ padding: 16 }}>
-          <SearchBar navigation={navigation} />
+          <SearchBar sHandler={setSearchTerm}  navigation={navigation} />
         </View>
 
         <View>

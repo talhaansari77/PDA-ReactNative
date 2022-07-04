@@ -5,6 +5,7 @@ import {
   Alert,
   ImageBackground,
   Dimensions,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Logo from "../Components/Auth/Logo";
@@ -17,6 +18,7 @@ import { appColors } from "../assets/Colors/Colors";
 
 export default function Login({ navigation }) {
   // var user = {};
+  const [loading, setLoading] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
@@ -37,6 +39,7 @@ export default function Login({ navigation }) {
   };
 
   const SubmitLogin = () => {
+    setLoading(true);
     fetch(
       Baseurl +
         "Users/CheckUser.php?email=" +
@@ -47,12 +50,14 @@ export default function Login({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.status) {
+          setLoading(false);
           activateUser(data.user);
           updateState();
           setUserEmail("");
           setUserPassword("");
           navigation.navigate("Home");
         } else {
+          setLoading(false);
           Alert.alert(data.Message);
         }
       });
@@ -94,7 +99,7 @@ export default function Login({ navigation }) {
           onChangeText={(text) => setUserPassword(text)}
         />
         <Button
-          text={"Login"}
+          text={loading?<ActivityIndicator color={"#fff"} size={26}/> : "Login"}
           size={20}
           color={"darkorange"}
           onPress={() => {

@@ -18,11 +18,12 @@ import { Divider } from "react-native-elements";
 import Button from "../Components/Auth/Button";
 import LottieView from "lottie-react-native";
 import { appColors } from "../assets/Colors/Colors";
+import { makeCall } from "../Components/RestaurantsDetails/About";
 
 var counterForReload = 0;
 
 export default function ManageOrders({ navigation, route }) {
-  const isFocused = useIsFocused();  
+  const isFocused = useIsFocused();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [counter, setCounter] = useState(0);
@@ -135,28 +136,27 @@ export default function ManageOrders({ navigation, route }) {
           )}
         </ScrollView>
         {loading ? (
-        <View
-          style={{
-            backgroundColor: "black",
-            position: "absolute",
-            opacity: 0.6,
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%",
-            width: "100%",
-          }}
-        >
-          <LottieView
-            style={{ height: 200 }}
-            source={require("../assets/animations/progress-bar.json")}
-            autoPlay
-            speed={1}
-            
-          />
-        </View>
-      ) : (
-        <></>
-      )}
+          <View
+            style={{
+              backgroundColor: "black",
+              position: "absolute",
+              opacity: 0.6,
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+              width: "100%",
+            }}
+          >
+            <LottieView
+              style={{ height: 200 }}
+              source={require("../assets/animations/progress-bar.json")}
+              autoPlay
+              speed={1}
+            />
+          </View>
+        ) : (
+          <></>
+        )}
       </ImageBackground>
     </View>
   );
@@ -206,24 +206,48 @@ export const modalContent = (
       </ScrollView>
       {/*//! using this component for Total */}
       <View>
-      <OrderItem
-        item={{ title: "--- Total ---" }}
-        status={total + " pkr"}
-        underline={false}
-      />
+        <OrderItem
+          item={{ title: "--- Total ---" }}
+          status={total + " pkr"}
+          underline={false}
+        />
       </View>
       {pathName == "Pending-Orders" || pathName == "On-Way-Orders" ? (
-        <Button
-          text={"Update"}
-          color={appColors.secondary}
-          txtColor={"#fff"}
-          size={15}
-          btnSize={10}
-          width={65}
-          onPress={() =>
-            UpdateOrderStatus(orderList, pathName, setModalVisible)
-          }
-        />
+        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+          <Button
+            text={"Cancel"}
+            color={"red"}
+            txtColor={"#fff"}
+            size={15}
+            btnSize={10}
+            width={150}
+            onPress={() =>
+              // makeCall("+9230123456789")
+              CancelUpdateOrder(orderList, "cancelled", setModalVisible)
+            }
+          />
+
+          <Button
+            text={"Update"}
+            color={appColors.secondary}
+            txtColor={"#fff"}
+            size={15}
+            btnSize={10}
+            width={150}
+            onPress={() =>
+              UpdateOrderStatus(orderList, pathName, setModalVisible)
+            }
+          />
+          <Button
+            text={"Call"}
+            color={"green"}
+            txtColor={"#fff"}
+            size={15}
+            btnSize={10}
+            width={150}
+            onPress={() => makeCall("+9230123456789")}
+          />
+        </View>
       ) : (
         <></>
       )}
@@ -233,6 +257,21 @@ export const modalContent = (
 
 const UpdateOrderStatus = async (orderList, pageTitle, setModalVisible) => {
   let orderStatus = SetOrderStatus(pageTitle);
+
+  console.log(orderStatus, "<== The Order Status");
+
+  const response = await axios.post(
+    Baseurl + "OrderDetail/UpdateOrderDetail.php",
+    JSON.stringify({ orderList, status: orderStatus })
+  );
+  if (response.data.status) {
+    console.log("Order Status Updated");
+    counterForReload += 1;
+    setModalVisible(false);
+  }
+};
+const CancelUpdateOrder = async (orderList, pageTitle, setModalVisible) => {
+  let orderStatus = pageTitle;
 
   console.log(orderStatus, "<== The Order Status");
 

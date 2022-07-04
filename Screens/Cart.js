@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Modal } from "react-native";
 import React, { useEffect, useState } from "react";
 import Title from "../Components/Auth/Title";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,10 +8,13 @@ import ViewCart from "../Components/RestaurantsDetails/ViewCart";
 import Button from "../Components/Auth/Button";
 import { appColors } from "../assets/Colors/Colors";
 import LottieView from "lottie-react-native";
+import { RadioButton } from "react-native-paper";
 
 export default function Cart({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showCheckOut, setShowCheckOut] = useState(false);
+  const [checked, setChecked] = useState("first");
 
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
@@ -111,6 +114,74 @@ export default function Cart({ navigation }) {
       },
     });
   };
+  const ModalContent = () => (
+    <View style={{ flex: 1 }}>
+      <Title text={"Select Your Payment Way"} />
+      <View style={{ marginHorizontal: 20 }}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <RadioButton
+            value="first"
+            color={appColors.secondary}
+            // onPress={()}
+            status={checked === "first" ? "checked" : "unchecked"}
+            onPress={() => setChecked("first")}
+          />
+          <Text>JazzCash</Text>
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <RadioButton
+            value="second"
+            color={appColors.secondary}
+            status={checked === "second" ? "checked" : "unchecked"}
+            onPress={() => setChecked("second")}
+          />
+          <Text>Cash On Delivery</Text>
+        </View>
+      </View>
+
+      <View style={{ padding: 10, flex: 1 }}>
+        <View
+          style={{
+            position: "absolute",
+            bottom: 10,
+            width: "105%",
+          }}
+        >
+          <Button
+            text={"Checkout"}
+            color={appColors.black2}
+            txtColor={appColors.primary}
+            size={20}
+            onPress={() => {
+              addOrderToDataBase();
+            }}
+          />
+        </View>
+      </View>
+      {loading ? (
+        <View
+          style={{
+            backgroundColor: "black",
+            position: "absolute",
+            opacity: 0.6,
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          <LottieView
+            style={{ height: 200 }}
+            source={require("../assets/animations/progress-bar.json")}
+            autoPlay
+            speed={1}
+          />
+        </View>
+      ) : (
+        <></>
+      )}
+    </View>
+  );
 
   useEffect(() => {
     console.log("cart reload");
@@ -118,6 +189,13 @@ export default function Cart({ navigation }) {
 
   return (
     <View style={{ backgroundColor: "#eee", flex: 1 }}>
+      <Modal
+        visible={showCheckOut}
+        onRequestClose={() => setShowCheckOut(false)}
+      >
+        <ModalContent />
+      </Modal>
+
       <Title text={"Manage Cart"} />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -147,38 +225,20 @@ export default function Cart({ navigation }) {
       {total ? (
         <View style={{ padding: 10 }}>
           <Button
-            text={"Checkout"}
+            text={"Proceed"}
             color={appColors.black2}
             txtColor={appColors.primary}
             size={20}
-            onPress={() => addOrderToDataBase()}
+            onPress={() => {
+              // addOrderToDataBase();0
+              setShowCheckOut(true);
+            }}
           />
         </View>
       ) : (
         <></>
       )}
-      {loading ? (
-        <View
-          style={{
-            backgroundColor: "black",
-            position: "absolute",
-            opacity: 0.6,
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%",
-            width: "100%",
-          }}
-        >
-          <LottieView
-            style={{ height: 200 }}
-            source={require("../assets/animations/progress-bar.json")}
-            autoPlay
-            speed={1}
-          />
-        </View>
-      ) : (
-        <></>
-      )}
+
       {/* <ViewCart navigation={navigation} /> */}
     </View>
   );

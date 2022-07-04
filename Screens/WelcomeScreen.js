@@ -12,13 +12,13 @@ export default function WelcomeScreen({navigation}) {
           backgroundColor: "#fff",
           image: <Image source={require("../assets/images/bread.png")}  style={{height:250,width:250}} />,
           title: "Welcome",
-          subtitle: "Done with React Native Onboarding Swiper",
+          subtitle: "Everyone Is Welcome To Join Us",
         },
         {
           backgroundColor: "#fff",
           image: <Image source={require("../assets/images/coffee.png")} style={{height:250,width:250}} />,
           title: "Lets Get Going",
-          subtitle: "Done with React Native Onboarding Swiper",
+          subtitle: "All In One Place",
         },
       ]}
     />

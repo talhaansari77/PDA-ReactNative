@@ -1,4 +1,14 @@
-import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, View,ImageBackground, Dimensions } from "react-native";
+import {
+  Alert,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native";
 import React, { useState } from "react";
 import { Divider } from "react-native-elements/dist/divider/Divider";
 import Input from "../Components/Auth/Input";
@@ -14,8 +24,11 @@ const SellerSignup = ({ navigation }) => {
   const [usercnic, setUserCnic] = useState("");
   const [userCity, setUserCity] = useState("");
   const [userBusiness, setUserBusiness] = useState("");
+  const [loading, setLoading] = useState(false);
+  
 
   const SubmitLogin = () => {
+    setLoading(true);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,13 +53,17 @@ const SellerSignup = ({ navigation }) => {
         .then((response) => response.json())
         .then((data) => {
           if (data.status == true) {
+            setLoading(false);
             navigation.navigate("LoginUser");
           } else {
+            setLoading(false);
+            Alert.alert(data.Message);
             console.log(data);
           }
           // console.log(data.status);
         });
     } else {
+      setLoading(false);
       Alert.alert("Invalid Information Please Try Again");
     }
   };
@@ -68,51 +85,51 @@ const SellerSignup = ({ navigation }) => {
           zIndex: -1,
         }}
       >
-      <View style={styles.shc}>
-        <View>
-          <Text style={styles.sh}>Signup as Seller</Text>
+        <View style={styles.shc}>
+          <View>
+            <Text style={styles.sh}>Signup as Seller</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.mt5}>
-      <ScrollView>
-        <Input
-          placeholder="Enter Email"
-          keyboardType="email-address"
-          iconname={"user"}
-          onChangeText={(text) => setUserEmail(text)}
-        />
-        <Input
-          placeholder="Password"
-          iconname={"lock"}
-          secureTextEntry={true}
-          onChangeText={(text) => setUserPassword(text)}
-        />
-        <Input
-          placeholder="Confirm Password"
-          iconname={"lock"}
-          secureTextEntry={true}
-          onChangeText={(text) => setUserCPassword(text)}
-        />
-        <Input
-          placeholder="CNIC 34xxx-xxxxxxx-x"
-          keyboardType="numeric"
-          iconname={"id-card"}
-          onChangeText={(text) => setUserCnic(text)}
-        />
+        <View style={styles.mt5}>
+          <ScrollView>
+            <Input
+              placeholder="Enter Email"
+              keyboardType="email-address"
+              iconname={"user"}
+              onChangeText={(text) => setUserEmail(text)}
+            />
+            <Input
+              placeholder="Password"
+              iconname={"lock"}
+              secureTextEntry={true}
+              onChangeText={(text) => setUserPassword(text)}
+            />
+            <Input
+              placeholder="Confirm Password"
+              iconname={"lock"}
+              secureTextEntry={true}
+              onChangeText={(text) => setUserCPassword(text)}
+            />
+            <Input
+              placeholder="CNIC 34xxx-xxxxxxx-x"
+              keyboardType="numeric"
+              iconname={"id-card"}
+              onChangeText={(text) => setUserCnic(text)}
+            />
 
-        <Input
-          placeholder="03xxxxxxxxx"
-          keyboardType="numeric"
-          iconname={"phone"}
-          onChangeText={(text) => setUserContact(text)}
-        />
-        <Input
-          placeholder="Business"
-          iconname={"store"}
-          onChangeText={(text) => setUserBusiness(text)}
-        />
+            <Input
+              placeholder="03xxxxxxxxx"
+              keyboardType="numeric"
+              iconname={"phone"}
+              onChangeText={(text) => setUserContact(text)}
+            />
+            <Input
+              placeholder="Business"
+              iconname={"store"}
+              onChangeText={(text) => setUserBusiness(text)}
+            />
 
-        {/* <Picker
+            {/* <Picker
           selectedValue={selectedLanguage}
           onValueChange={(itemValue, itemIndex) =>
             setSelectedLanguage(itemValue)
@@ -122,23 +139,26 @@ const SellerSignup = ({ navigation }) => {
           <Picker.Item label="JavaScript" value="js" />
         </Picker> */}
 
-        <Input
-          placeholder="City"
-          iconname={"map-marker-alt"}
-          onChangeText={(text) => setUserCity(text)}
-        />
-        {/* <Divider size={1} style={{ marginHorizontal: 50, marginTop: 10 }} /> */}
-        <Divider size={1} style={{ marginHorizontal: 150, marginTop: 10 }} />
-        <Button
-          text={"Sign-up"}
-          size={20}
-          color={appColors.secondary}
-          onPress={() => {
-            SubmitLogin();
-          }}
-        />
-        </ScrollView>
-      </View>
+            <Input
+              placeholder="City"
+              iconname={"map-marker-alt"}
+              onChangeText={(text) => setUserCity(text)}
+            />
+            {/* <Divider size={1} style={{ marginHorizontal: 50, marginTop: 10 }} /> */}
+            <Divider
+              size={1}
+              style={{ marginHorizontal: 150, marginTop: 10 }}
+            />
+            <Button
+              text={loading?<ActivityIndicator color={"#fff"} size={26}/> : "Sign-up"}
+              size={20}
+              color={appColors.secondary}
+              onPress={() => {
+                SubmitLogin();
+              }}
+            />
+          </ScrollView>
+        </View>
       </ImageBackground>
     </SafeAreaView>
   );

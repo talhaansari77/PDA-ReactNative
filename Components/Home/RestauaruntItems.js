@@ -16,6 +16,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { netConnection } from "../General/connection";
 import LottieView from "lottie-react-native";
 import Demo from "../../Screens/Demo";
+import { appColors } from "../../assets/Colors/Colors";
 
 export default function RestauaruntItems({ navigation, ...props }) {
   const [netStatus, setNetStatus] = useState({ type: "", isConnected: false });
@@ -94,6 +95,7 @@ export default function RestauaruntItems({ navigation, ...props }) {
                   image={props.pda ? item.imageUrls : item.imageUrls[0]}
                   redHeart={redHeart}
                   setRedHeart={setRedHeart}
+                  pda={props.pda ? props.pda : false}
                 />
                 <RestauaruntInfo name={item.title} rating={item.totalScore} />
               </View>
@@ -114,12 +116,13 @@ export default function RestauaruntItems({ navigation, ...props }) {
             >
               <View>
                 {props.isLoadingMore ? (
-                  <LottieView
-                    style={{ height: 30 }}
-                    source={require("../../assets/animations/progress-bar.json")}
-                    autoPlay
-                    speed={1}
-                  />
+                  // <LottieView
+                  //   style={{ height: 30 }}
+                  //   source={require("../../assets/animations/progress-bar.json")}
+                  //   autoPlay
+                  //   speed={1}
+                  // />
+                  <ActivityIndicator color={appColors.secondary} size={19} />
                 ) : (
                   <Text
                     style={{
@@ -172,11 +175,15 @@ const RestauaruntImage = (props) => (
       }
       style={{ position: "absolute", right: 20, top: 20 }}
     >
-      <MaterialCommunityIcons
-        name={props.redHeart ? "heart" : "heart-outline"}
-        size={40}
-        color={props.redHeart ? "red" : "#fff"}
-      />
+      {props.pda ? (
+        <MaterialCommunityIcons
+          name={props.redHeart ? "heart" : "heart-outline"}
+          size={40}
+          color={props.redHeart ? "red" : "#fff"}
+        />
+      ) : (
+        <></>
+      )}
     </TouchableOpacity>
   </>
 );

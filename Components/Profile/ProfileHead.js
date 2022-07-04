@@ -46,13 +46,9 @@ export default function ProfileHead({navigation, ...props}) {
           },
         }
       )
-      .then((response) => {
-        ToastAndroid.show("Image Uploaded", ToastAndroid.SHORT);
-        setImage("");
-      })
+      .then((response) => ToastAndroid.show("Image Uploaded", ToastAndroid.SHORT))
       .catch((error) => {
         Alert.alert("Something Went Wrong Please Try Again");
-        setImage("");
       });
     // console.log(formdata);
   };

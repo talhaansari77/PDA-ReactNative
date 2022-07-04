@@ -70,27 +70,35 @@ let cartReducer = (state = defaultState, action) => {
       let cartItemToMinus = newState2.selectedItems.items.find(
         (item) => item.id === action.payload.id
       );
-      let cartItemModified = {
-        ...cartItemToMinus,
-        qty:
-          cartItemToMinus.qty > 1
-            ? cartItemToMinus.qty - 1
-            : cartItemToMinus.qty,
-        price:
-          cartItemToMinus.qty > 1
-            ? (
-                (cartItemToMinus.price * (cartItemToMinus.qty - 1)) /
-                  cartItemToMinus.qty +
-                1 -
-                1
-              ).toString()
-            : cartItemToMinus.price,
-      };
+      let cartItemModified = {};
+      let cartListModified = {};
 
-      let cartListModified = newState2.selectedItems.items.map((item) =>
-        item.id === action.payload.id ? cartItemModified : item
-      );
-
+      if (cartItemToMinus.qty > 1) {
+        cartItemModified = {
+          ...cartItemToMinus,
+          qty:
+            cartItemToMinus.qty > 1
+              ? cartItemToMinus.qty - 1
+              : cartItemToMinus.qty,
+          price:
+            cartItemToMinus.qty > 1
+              ? (
+                  (cartItemToMinus.price * (cartItemToMinus.qty - 1)) /
+                    cartItemToMinus.qty +
+                  1 -
+                  1
+                ).toString()
+              : cartItemToMinus.price,
+        };
+        cartListModified = newState2.selectedItems.items.map((item) =>
+          item.id === action.payload.id ? cartItemModified : item
+        );
+      } else if (cartItemToMinus.qty === 1) {
+        cartListModified = newState2.selectedItems.items.filter(
+          (item) => item.id !== action.payload.id
+        ); 
+      }
+ 
       newState2.selectedItems = {
         items: cartListModified,
         shopName: "",
