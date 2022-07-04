@@ -97,6 +97,7 @@ export default function MainDrawer() {
         name="History"
         component={History}
         options={{
+          drawerItemStyle: { display:!status ? "none" : "flex" },
           drawerIcon: ({ color }) => (
             <FontAwesome5 name="receipt" size={22} color={color} />
           ),

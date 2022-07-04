@@ -1,5 +1,11 @@
-import { View, Text, SafeAreaView, ScrollView, ImageBackground } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  ImageBackground,
+} from "react-native";
+import React, { useState } from "react";
 import ProfileHead from "../Components/Profile/ProfileHead";
 import ProfileNav from "../Components/Profile/ProfileNav";
 import DropDown from "../Components/General/DropDown";
@@ -7,8 +13,10 @@ import DropDown from "../Components/General/DropDown";
 import { useSelector } from "react-redux";
 import Button from "../Components/Auth/Button";
 import { Provider } from "react-native-paper";
+import LottieView from "lottie-react-native";
 
 export default function Profile({ navigation, route }) {
+  const [loading, setLoading] = useState(false);
   const { name, email, shopId, type } = useSelector(
     (state) => state.CreateUserReducer.activeUser.user
   );
@@ -30,19 +38,19 @@ export default function Profile({ navigation, route }) {
     {
       title: "Pending-Orders",
       onPress: () => {
-        navigation.navigate("ManageOrders",{title:'Pending-Orders'});
+        navigation.navigate("ManageOrders", { title: "Pending-Orders" });
       },
     },
     {
       title: "On-Way-Orders",
       onPress: () => {
-        navigation.navigate("ManageOrders",{title:'On-Way-Orders'});
+        navigation.navigate("ManageOrders", { title: "On-Way-Orders" });
       },
     },
     {
       title: "Completed-Orders",
       onPress: () => {
-        navigation.navigate("ManageOrders",{title:'Completed-Orders'});
+        navigation.navigate("ManageOrders", { title: "Completed-Orders" });
       },
     },
   ];
@@ -52,68 +60,99 @@ export default function Profile({ navigation, route }) {
         source={require("../assets/images/bg-wallpaper6.jpg")}
         style={{ height: "100%", width: "100%" }}
       >
-      <SafeAreaView>
-        <ProfileHead name={name} email={email} navigation={navigation} />
-        {/* My Profile */}
-        <Title />
-        {/* Creat Shop First */}
-        {/* if (type != "regular"){} */}
-        {(shopId == null || shopId == 0) && type == "seller" ? (
-          <View
-            style={{ marginTop: 30, height: "50%", justifyContent: "center" }}
-          >
-            <Button
-              text={"Create Shop"}
-              size={25}
-              color={"#ffe0b2"}
-              onPress={() => navigation.navigate("CreateShop")}
-            />
-          </View>
-        ) : type == "seller" ? (
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={{ marginTop: 30 }}
-          >
-            <ProfileNav
-              name={"Add Product"}
-              navigation={navigation}
-              path={"AddProducts"}
-              icon={"plus"}
-            />
-            <ProfileNav
-              name={"Add Category"}
-              navigation={navigation}
-              path={"AddCategory"}
-              icon={"plus"}
-            />
+        <SafeAreaView>
+          <ProfileHead
+            name={name}
+            email={email}
+            setLoading={setLoading}
+            navigation={navigation}
+          />
+          {/* My Profile */}
+          <Title />
+          {/* Creat Shop First */}
+          {/* if (type != "regular"){} */}
+          {(shopId == null || shopId == 0) && type == "seller" ? (
+            <View
+              style={{ marginTop: 30, height: "50%", justifyContent: "center" }}
+            >
+              <Button
+                text={"Create Shop"}
+                size={25}
+                color={"#ffe0b2"}
+                onPress={() => navigation.navigate("CreateShop")}
+              />
+            </View>
+          ) : type == "seller" ? (
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={{ marginTop: 30 }}
+            >
+              <ProfileNav
+                name={"Add Product"}
+                navigation={navigation}
+                path={"AddProducts"}
+                icon={"plus"}
+              />
+              <ProfileNav
+                name={"Add Category"}
+                navigation={navigation}
+                path={"AddCategory"}
+                icon={"plus"}
+              />
 
-            <DropDown items={items} icon={"plus"} btnTitle={"Manage"} />
-            <DropDown items={ordersMenu} icon={"receipt"} btnTitle={"Manage Orders"}  />
-            {/* <Divider width={1} style={{ margin: 15 }} /> */}
-            {/* <ProfileNav
+              <DropDown items={items} icon={"plus"} btnTitle={"Manage"} />
+              <DropDown
+                items={ordersMenu}
+                icon={"receipt"}
+                btnTitle={"Manage Orders"}
+              />
+              {/* <Divider width={1} style={{ margin: 15 }} /> */}
+              {/* <ProfileNav
               name={"Manage Orders"}
               icon={"receipt"}
               navigation={navigation}
               path={"ManageOrders"}
             /> */}
-            <ProfileNav
-              name={"My Shop"}
-              icon={"store"}
-              navigation={navigation}              
-              path={"ShopDetail"}
+              <ProfileNav
+                name={"My Shop"}
+                icon={"store"}
+                navigation={navigation}
+                path={"ShopDetail"}
+              />
+              <ProfileNav
+                name={"Monthly Reports"}
+                icon={"receipt"}
+                navigation={navigation}
+                path={"Reports"}
+              />
+            </ScrollView>
+          ) : (
+            <></>
+          )}
+          {/* Seller Option */}
+        </SafeAreaView>
+        {loading ? (
+          <View
+            style={{
+              backgroundColor: "black",
+              position: "absolute",
+              opacity: 0.6,
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+              width: "100%",
+            }}
+          >
+            <LottieView
+              style={{ height: 200 }}
+              source={require("../assets/animations/progress-bar.json")}
+              autoPlay
+              speed={1}
             />
-            <ProfileNav
-              name={"Monthly Reports"}
-              icon={"receipt"}
-              navigation={navigation}              
-              path={"Reports"}
-            />
-          </ScrollView>
+          </View>
         ) : (
           <></>
         )}
-        {/* Seller Option */}
-      </SafeAreaView>
       </ImageBackground>
     </Provider>
   );

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Modal } from "react-native";
+import { View, Text, ScrollView, Modal, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import Title from "../Components/Auth/Title";
 import { useDispatch, useSelector } from "react-redux";
@@ -126,6 +126,11 @@ export default function Cart({ navigation }) {
             status={checked === "first" ? "checked" : "unchecked"}
             onPress={() => setChecked("first")}
           />
+          <Image
+            style={{ height: 50, width: 50 }}
+            height={20}
+            source={require("../assets/images/jazz-cash-logo.png")}
+          />
           <Text>JazzCash</Text>
         </View>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -135,6 +140,12 @@ export default function Cart({ navigation }) {
             status={checked === "second" ? "checked" : "unchecked"}
             onPress={() => setChecked("second")}
           />
+          <Image
+            style={{ height: 50, width: 50 }}
+            height={20}
+            source={require("../assets/images/codLogo.png")}
+          />
+
           <Text>Cash On Delivery</Text>
         </View>
       </View>

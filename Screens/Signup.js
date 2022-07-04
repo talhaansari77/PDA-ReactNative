@@ -1,4 +1,4 @@
-import { Alert, Dimensions, ImageBackground, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Alert, Dimensions, ImageBackground, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { Divider } from "react-native-elements/dist/divider/Divider";
 import Input from "../Components/Auth/Input";
@@ -11,14 +11,17 @@ const Signup = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userCPassword, setUserCPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
 
   const SubmitLogin = () => {
+    setLoading(true);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name: userName,
-        email: userEmail,
+        name: userName.trim(),
+        email: userEmail.trim(),
         password: userPassword,
         type: "regular",
         contact: "",
@@ -34,10 +37,15 @@ const Signup = ({ navigation }) => {
         .then((data) => {
           console.log(data);
           if (data.status == true) {
+            setLoading(false);
             navigation.navigate("LoginUser");
+          }else{
+            setLoading(false);
+            Alert.alert(data.Message);
           }
         });
     } else {
+      setLoading(false);
       Alert.alert("Password does not Match");
     }
   };
@@ -93,7 +101,7 @@ const Signup = ({ navigation }) => {
 
         {/* <Divider size={1} style={{ marginHorizontal: 50, marginTop: 10 }} /> */}
         <Button
-          text={"Sign-up"}
+          text={loading?<ActivityIndicator color={"#fff"} size={26}/> :"Sign-up"}
           size={20}
           color={appColors.secondary}
           onPress={() => {

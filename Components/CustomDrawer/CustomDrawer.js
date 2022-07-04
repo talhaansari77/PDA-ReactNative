@@ -13,8 +13,6 @@ import {
 } from "@react-navigation/drawer";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../Auth/Button";
-import { CurrentLocation } from "../General/CurrentLocation";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { appColors } from "../../assets/Colors/Colors";
 
 export default function CustomDrawer({ locationText, status, ...props }) {

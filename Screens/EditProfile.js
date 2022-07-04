@@ -5,6 +5,7 @@ import {
   ImageBackground,
   ToastAndroid,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +21,7 @@ export default function EditProfile({ navigation }) {
     (state) => state.CreateUserReducer.activeUser
   );
 
+  const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState(user.name);
   const [userEmail, setUserEmail] = useState(user.email);
   const [userPassword, setUserPassword] = useState("");
@@ -41,6 +43,7 @@ export default function EditProfile({ navigation }) {
   };
 
   const SaveChanges = () => {
+    setLoading(true);
     const userData = {
       id: user.id,
       name: userName,
@@ -69,17 +72,20 @@ export default function EditProfile({ navigation }) {
         .then((data) => {
           if (data.status == true) {
             activateUser(userData);
+            setLoading(false);
             navigation.navigate("Profile1");
             ToastAndroid.show(
               "Profile Updated Successfully",
               ToastAndroid.SHORT
             );
           } else {
+            setLoading(false);
             console.log(data);
           }
           // console.log(data.status);
         });
     } else {
+      setLoading(false);
       Alert.alert("Password Does Not Match Try Again");
     }
   };
@@ -149,13 +155,13 @@ export default function EditProfile({ navigation }) {
           />
           <Divider size={1} style={{ marginHorizontal: 50, marginTop: 10 }} />
           <Button
-            text={"Save"}
+            text={loading?<ActivityIndicator color={"#fff"} size={26}/> : "Save"}
             size={20}
             color={appColors.secondary}
             onPress={() => {
               SaveChanges();
             }}
-          />
+        />
         </ScrollView>
       </ImageBackground>
     </View>

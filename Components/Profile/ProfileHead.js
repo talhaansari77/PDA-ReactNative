@@ -18,13 +18,14 @@ import axios from "axios";
 import Baseurl from "../Auth/Baseurl";
 import { useSelector } from "react-redux";
 
-export default function ProfileHead({navigation, ...props}) {
+export default function ProfileHead({ navigation, ...props }) {
   const [image, setImage] = useState("");
   const { id, picture } = useSelector(
     (state) => state.CreateUserReducer.activeUser.user
   );
 
   const UploadImage = () => {
+    props.setLoading(true);
     const formdata = new FormData();
     const imgToUpload = {
       type: "image/jpeg",
@@ -46,8 +47,12 @@ export default function ProfileHead({navigation, ...props}) {
           },
         }
       )
-      .then((response) => ToastAndroid.show("Image Uploaded", ToastAndroid.SHORT))
+      .then((response) => {
+        props.setLoading(false);
+        ToastAndroid.show("Image Uploaded", ToastAndroid.SHORT);
+      })
       .catch((error) => {
+        props.setLoading(false);
         Alert.alert("Something Went Wrong Please Try Again");
       });
     // console.log(formdata);
@@ -118,8 +123,8 @@ export default function ProfileHead({navigation, ...props}) {
             </Text>
           </View>
           <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => navigation.navigate("EditProfile")}
+            activeOpacity={0.7}
+            onPress={() => navigation.navigate("EditProfile")}
             style={{ justifyContent: "center", marginLeft: 20 }}
           >
             <FontAwesome5Icon

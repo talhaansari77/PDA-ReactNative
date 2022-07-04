@@ -34,13 +34,13 @@ const SellerSignup = ({ navigation }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name: userEmail.split("@")[0],
-        email: userEmail,
+        email: userEmail.trim(),
         password: userPassword,
         type: "seller",
-        contact: userContact,
-        business: userBusiness,
-        city: userCity,
-        cnic: usercnic,
+        contact: userContact.trim(),
+        business: userBusiness.trim(),
+        city: userCity.trim(),
+        cnic: usercnic.trim(),
         picture: "",
       }),
     };

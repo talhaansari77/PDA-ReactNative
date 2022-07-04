@@ -78,7 +78,7 @@ export default function StackHome({ navigation, route }) {
         );
         setIsLoading(false);
         setIsLoadingMore(false);
-        console.log("Loading", route.params.locationText, "<==");
+        console.log("Loading", route.params.locationText, "<== Home");
       });
   };
 
