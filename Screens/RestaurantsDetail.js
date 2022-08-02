@@ -7,8 +7,11 @@ import ViewCart from "../Components/RestaurantsDetails/ViewCart";
 import axios from "axios";
 import Baseurl from "../Components/Auth/Baseurl";
 import Map from "./Map";
+import { useIsFocused } from "@react-navigation/native";
+
 
 export default function RestaurantsDetail({ route, navigation }) {
+  const isFocused = useIsFocused();
   const [Food, setFood] = useState([]);
   const [loading, setLoading] = useState(false);
   console.log(route.params.lat, "🖐 here is the lat");
@@ -18,6 +21,7 @@ export default function RestaurantsDetail({ route, navigation }) {
   // });
 
   useEffect(() => {
+    if (isFocused) {
     setLoading(true);
     axios
       .get(Baseurl + "Products/GetProducts.php?menuId=" + route.params.shopId)
@@ -25,7 +29,8 @@ export default function RestaurantsDetail({ route, navigation }) {
         setFood(res.data);
         setLoading(false);
       });
-  }, []);
+    }
+  }, [isFocused]);
 
   return (
     <View style={{ backgroundColor: "#eee", flex: 1 }}>
